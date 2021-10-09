@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Login</title>
+</head>
+<body>
+    
+    <h1 style="text-align:center">Login</h1>
+
+    <div id="content-center">
+            <form action="/login" method="post">
+            <div style="margin:15px">
+                <label for="email">Email:</label>
+                <input type="text" name="email" id="email" placeholder="Enter your email">
+            </div>
+            <div>
+                <label for="password">Password:</label>
+                <input type="password" name="password" id="password" placeholder="Enter your password">
+            </div>
+                <button type="submit">Login</button>
+            </form>
+
+            <!-- register -->
+            <form action="/register" method="get">
+                <label>Don't have an account? </label>
+                <button type="submit">Register</button>
+            </form>
+
+            <!-- home -->
+            <form action="/" method="get">
+                <label>Want to go to Home page </label>
+                <button type="submit">Home</button>
+            </form>
+    </div>
+</body>
+</html>

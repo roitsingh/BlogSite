@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Home</title>
+</head>
+<body>
+    <% if(!user) { %>
+        <h1 style="text-align:center">Welcome to Home Page</h1>
+
+    <% }else { %>
+        <h1 style="text-align:center">Welcome <%= user.firstname %></h1>
+    <% } %>
+
+    <div id="btn">
+        <form action="/create" method="get">
+            <button type="submit" >Create Note</button>
+        </form>
+
+        <% if(!user) { %>
+            <form action="/login" method="get">
+                <button type="submit">Login</button>
+            </form>
+        <% }else { %>
+            <form action="/profile" method="get">
+                <button type="submit">Profile</button>
+            </form>
+        <% } %>
+        
+        <% if(!user) { %>
+            <form action="/register" method="get">
+                <button type="submit">Register</button>
+            </form>
+        <% }else { %>
+            <form action="/logout" method="post">
+                <button type="submit">Logout</button>
+            </form>
+        <% } %>
+    </div>
+
+    <div id="allPosts">
+        <% posts.forEach((post)=>{ %>
+            <div id="notes">
+                <h3><%= post.title %></h3>
+                <h4><%= post.description %></h4>
+                <h5>Created By:- <%= post.author.username %></h5>
+                <h6>Created On:- <%= post.created %></h6>
+
+                <!-- show all comments  -->
+                <form action="/<%= post._id %>/show" method="get">
+                    <button type="submit">All comments</button>
+                </form>
+                
+                <form action="/<%= post._id %>/addcomment" method="post">
+                    <div class="addcomment">
+                        <input type="text" name="comment" id="comment" placeholder="Add a comment">
+                        <button type="submit">Add comment</button>
+                    </div>
+                </form>
+            </div>
+            
+        <% }) %>
+
+    </div>
+
+</body>
+</html>

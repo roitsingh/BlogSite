@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style.css">
+    <title>Show</title>
+</head>
+
+<body>
+    <div id="content-center">
+        <div id="notes">
+            <h3>
+                <%= post.title %>
+            </h3>
+            <h5>
+                <%= post.description %>
+            </h5>
+            <h6>
+                <%= post.created %>
+            </h6>
+
+            <div id="btn">
+                <!-- edit notes button  -->
+                <form action="/<%= post._id %>/edit" method="get">
+                    <button type="submit">Edit</button>
+                </form>
+
+                <!-- delete notes button  -->
+                <form action="/<%= post._id %>/delete" method="post">
+                    <button type="submit">Delete</button>
+                </form>
+            </div>
+
+            <form action="/<%= post._id %>/addcomment" method="post">
+                <div class="addcomment">
+                    <input type="text" name="comment" id="comment" placeholder="Add a comment">
+                    <button type="submit">Add comment</button>
+                </div>
+            </form>
+        </div>
+        <div class="allcomments">
+            <% comments.forEach((comment) => { %>
+                <% if(typeof id == 'undefined') { %>
+                <div class="comment">
+                    <h5>
+                        <%= comment.author.username %>
+                    </h5>
+                    <h5>
+                        <%= comment.message %>
+                    </h5>
+                    <h6>
+                        <%= comment.date %>
+                    </h6>
+
+                    <div id="btn">
+                        <!-- edit the comment -->
+                        <form action="/comment/<%= comment._id %>/edit" method="get">
+                            <button type="submit">Edit</button>
+                        </form>
+
+                        <!-- delete the comment -->
+                        <form action="/comment/<%= comment._id %>/delete" method="post">
+                            <button type="submit">Delete</button>
+                        </form>
+                    </div>
+                </div>
+                <% } else { %>
+                    <% if(id == comment._id ) { %>
+                        <div class="comment">
+                            <form action="/comment/<%= comment._id %>/edit" method="post">
+                                <h5>
+                                    <%= comment.author.username %>
+                                </h5>
+                                <input type="text" name="editedComment" id="editedComment"
+                                    value="<%= comment.message %>">
+                                <h6>
+                                    <%= comment.date %>
+                                </h6>
+                                <button type="submit">Edit</button>
+                            </form>
+                        </div>
+                    <% } else { %>
+                        <div class="comment">
+                            <h5>
+                                <%= comment.author.username %>
+                            </h5>
+                            <h5>
+                                <%= comment.message %>
+                            </h5>
+                            <h6>
+                                <%= comment.date %>
+                            </h6>
+
+                            <div id="btn">
+                                <!-- edit the comment -->
+                                <form action="/comment/<%= comment._id %>/edit" method="get">
+                                    <button type="submit">Edit</button>
+                                </form>
+
+                                <!-- delete the comment -->
+                                <form action="/comment/<%= comment._id %>/delete" method="post">
+                                    <button type="submit">Delete</button>
+                                </form>
+                            </div>
+                        </div>
+                    <% } %>
+                <% } %>
+            <% }) %>
+        </div>
+    </div>
+</body>
+
+</html>
