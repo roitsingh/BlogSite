@@ -64,7 +64,7 @@ router.post('/register', async (req, res) => {
             email,
             password
         })
-
+        
         bcrypt.genSalt(10, (err, salt) =>
             bcrypt.hash(newUser.password, salt, (err, hash) => {
                 if (err) throw err;
@@ -77,6 +77,7 @@ router.post('/register', async (req, res) => {
                         res.redirect('/login')
                     })
                     .catch(err => {
+                        console.log(err);
                         if(err.keyPattern.email==1 && err.code==11000)
                             errors.push({ msg:"Email id already registered."});
                         if(err.keyPattern.username==1 && err.code==11000)
@@ -97,6 +98,11 @@ router.post('/register', async (req, res) => {
 });
 
 router.post('/logout', (req, res) => {
+    req.logout();
+    res.redirect('/');
+})
+
+router.get('/logout', (req, res) => {
     req.logout();
     res.redirect('/');
 })

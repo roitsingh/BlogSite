@@ -8,33 +8,37 @@
     <title>Login</title>
 </head>
 <body>
+    <!-- header -->
+    <%- include('partials/header2.ejs') %>
     
     <h1 style="text-align:center">Login</h1>
 
     <div id="content-center">
-            <form action="/login" method="post">
-            <div style="margin:15px">
-                <label for="email">Email:</label>
-                <input type="text" name="email" id="email" placeholder="Enter your email">
-            </div>
-            <div>
-                <label for="password">Password:</label>
-                <input type="password" name="password" id="password" placeholder="Enter your password">
-            </div>
-                <button type="submit">Login</button>
-            </form>
+        <form action="/login" method="post">
+        <div class="inner-box">
+            <label for="email"><b>Email:</b></label>
+            <input type="text" name="email" id="email" placeholder="Enter your email">
+        
+            <label for="password"><b>Password:</b></label>
+            <input type="password" name="password" id="password" placeholder="Enter your password">
+        </div>
+        <div class="btn">
+            <button type="submit">Login</button>
+        </div>
+        </form>
 
-            <!-- register -->
-            <form action="/register" method="get">
-                <label>Don't have an account? </label>
-                <button type="submit">Register</button>
-            </form>
+        <!--
+        <form action="/register" method="get">
+            <label>Don't have an account? </label>
+            <button type="submit">Register</button>
+        </form>
 
-            <!-- home -->
-            <form action="/" method="get">
-                <label>Want to go to Home page </label>
-                <button type="submit">Home</button>
-            </form>
+        
+        <form action="/" method="get">
+            <label>Want to go to Home page </label>
+            <button type="submit">Home</button>
+        </form>
+        -->
     </div>
 </body>
 </html>

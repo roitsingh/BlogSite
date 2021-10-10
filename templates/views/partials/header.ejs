@@ -1,0 +1,24 @@
+<header>
+    <div class="head-left">
+        <a href="/">BlogSite</a>
+    </div>
+    <div class="head-right">
+        <div class="create-note">
+            <a href="/create">Create Post</a>
+        </div>
+        <div class="login">
+            <% if(!user) { %>
+                <a href="/login">Login</a>
+            <% }else { %>
+                <a href="/profile"><%= user.firstname %></a>
+            <% } %>
+        </div>
+        <div class="register">
+            <% if(!user) { %>
+                <a href="/register">Register</a>
+            <% }else { %>
+                <a href="/logout">Logout</a>
+            <% } %>
+        </div>
+    </div>
+</header>

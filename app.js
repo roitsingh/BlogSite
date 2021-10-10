@@ -6,6 +6,8 @@ const passport = require('passport');
 const flash = require('connect-flash');
 const User = require('./models/user');
 const app = express();
+const db = require('./models/DB/connect');
+require('dotenv').config();
 require('./config/passport')(passport);
 
 var indexRoutes = require('./routes/index');
@@ -21,9 +23,10 @@ const cssPath = path.join(__dirname, './public');
 app.set('view engine', 'ejs');
 app.set('views', viewsPath);
 
-mongoose.connect("mongodb://localhost:27017/bloggg", { useNewUrlParser: true, useUnifiedTopology: true })
+db();
+/*mongoose.connect("mongodb://localhost:27017/bloggg", { useNewUrlParser: true, useUnifiedTopology: true })
 	.then(() => console.log("connecting..."))
-	.catch((err) => console.log(err));
+	.catch((err) => console.log(err));*/
 
 app.use(express.static(cssPath));
 app.use(express.urlencoded({ extended: true }));

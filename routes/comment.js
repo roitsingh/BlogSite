@@ -3,7 +3,7 @@ const router = express.Router();
 const Post = require('../models/post');
 const User = require('../models/user');
 const Comment = require('../models/comment');
-const { isLoggedIn, checkOwnerShip } = require('../config/auth');
+const { isLoggedIn, checkCommentOwnerShip } = require('../config/auth');
 
 // add the comments to a post, here postid is passing in route
 router.post('/:id/addcomment',isLoggedIn, async (req,res)=>{
@@ -27,14 +27,14 @@ router.get('/:id/show',async(req,res) => {
         const tid=undefined;
         const comments=await Comment.find({postId:req.params.id});
         const post=await Post.findById({_id:req.params.id});
-        res.render('show',{tid,post,comments});
+        res.render('show',{tid,user:req.user,post,comments});
     } catch (error) {
         return res.status(400).send({error:error});
     }
 })
 
 // edit the comment, here comment id is passing in route
-router.get('/comment/:id/edit',checkOwnerShip,async(req,res) => {
+router.get('/comment/:id/edit',isLoggedIn,checkCommentOwnerShip,async(req,res) => {
     try {
         const id=req.params.id;
         const calledComment= await Comment.findById({_id:req.params.id});
@@ -47,7 +47,7 @@ router.get('/comment/:id/edit',checkOwnerShip,async(req,res) => {
 })
 
 // save the edited comment, here comment id is passing in route
-router.post('/comment/:id/edit',checkOwnerShip,async(req,res) => {
+router.post('/comment/:id/edit',isLoggedIn,checkCommentOwnerShip,async(req,res) => {
     try {
         const id=req.params.id;
         const tid=undefined;
@@ -64,7 +64,21 @@ router.post('/comment/:id/edit',checkOwnerShip,async(req,res) => {
 })
 
 // delete the comment, here comment id is passing in route
-router.post('/comment/:id/delete',checkOwnerShip,async(req,res) => {
+router.get('/comment/:id/delete',async(req,res) => {
+    try {
+        const id=req.params.id;
+        const tid=undefined;
+        const calledComment= await Comment.findById({_id:req.params.id});
+        const comments=await Comment.find({postId:calledComment.postId});
+        const post=await Post.findById({_id:calledComment.postId});
+        res.render('show',{tid,post,comments});
+    } catch (error) {
+        return res.status(400).send({error:error});
+    }
+})
+
+// delete the comment, here comment id is passing in route
+router.post('/comment/:id/delete',isLoggedIn,checkCommentOwnerShip,async(req,res) => {
     try {
         const id=req.params.id;
         const tid=undefined;

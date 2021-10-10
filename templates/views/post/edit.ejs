@@ -8,23 +8,29 @@
     <title>Edit</title>
 </head>
 <body>
+    <!-- header -->
+    <%- include('../partials/header.ejs') %>
+
     <h1 style="text-align:center"> Edit Post</h1>
     <div id="content-center">
         <form action="/<%= post._id %>/edit" method="post">
-            <div>
+            <div class="inner-box">
                 <label for="title">Title:</label>
                 <input type="text" name="title" id="title" value="<%= post.title %>">
-            </div>
-            <div>
+            
                 <label for="description">Description:</label>
                 <textarea name="description" id="description" cols="30" rows="10"><%= post.description %></textarea>
             </div>
-            <button type="submit">Update Note</button>
+            <div class="btn">
+                <button type="submit">Update Note</button>
+            </div>
         </form>
 
         <!-- don't want to edit post -->
         <form action="/profile" method="get">
-            <button type="submit">Cancel</button>
+            <div class="btn">
+                <button type="submit">Cancel</button>
+            </div>
         </form>
     </div>
 </body>

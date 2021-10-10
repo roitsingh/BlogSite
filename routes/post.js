@@ -2,10 +2,11 @@ const express = require('express');
 const router = express.Router();
 const Post = require('../models/post');
 const User = require('../models/user');
-const { isLoggedIn } = require('../config/auth');
+const Comment = require('../models/comment');
+const { isLoggedIn, checkPostOwnerShip } = require('../config/auth');
 
 router.get('/create',isLoggedIn, (req, res) => {
-    res.render('post/new');
+    res.render('post/new',{user:req.user});
 })
 
 router.post('/create',isLoggedIn, async (req, res) => {
@@ -27,17 +28,17 @@ router.post('/create',isLoggedIn, async (req, res) => {
     }
 });
 
-router.get('/:id/edit',isLoggedIn, async (req, res) => {
+router.get('/:id/edit',isLoggedIn,checkPostOwnerShip, async (req, res) => {
     const post = await Post.findById(req.params.id);
     if (!post) {
         return res
             .status(404)
             .send({ error: 'Could not find a post with that post id.' });
     }
-    res.render('post/edit', { post: post });
+    res.render('post/edit', { user:req.user, post: post });
 });
 
-router.post('/:id/edit',isLoggedIn, async (req, res) => {
+router.post('/:id/edit',isLoggedIn,checkPostOwnerShip, async (req, res) => {
     try {
         const UpdateStatus = await Post.findOneAndUpdate({_id:req.params.id}, {
             title: req.body.title,
@@ -52,9 +53,9 @@ router.post('/:id/edit',isLoggedIn, async (req, res) => {
     }
 });
 
-router.post('/:id/delete',isLoggedIn, async(req,res) => {
+router.post('/:id/delete',isLoggedIn,checkPostOwnerShip, async(req,res) => {
     try {
-        
+        const deleteComment = await Comment.deleteMany({postId:req.params.id});
         const deleteStatus = await Post.deleteOne({_id:req.params.id});
         res.redirect('/profile');
 
