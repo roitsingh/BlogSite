@@ -26,7 +26,8 @@ router.post('/login', (req, res, next) => {
 });
 
 router.get('/register', (req, res) => {
-    res.render('register');
+    let errors=[];
+    res.render('register',{errors});
 });
 
 router.post('/register', async (req, res) => {

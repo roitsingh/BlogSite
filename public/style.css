@@ -5,7 +5,7 @@ body{
     overflow-x: hidden;
 }
 #notes{
-    border:3px solid pink;
+    border:3px solid rgb(114, 116, 241);
     display: flex;
     flex-direction: column;
     justify-content:space-between;
@@ -220,13 +220,13 @@ a:hover
 
 @media screen and (max-width:400px) {
     header>.head-left{
-        font-size: 1.7rem;
+        font-size: 1.5rem;
         color: blue;
         font-weight:bolder;
     }
 
     header>.head-right{
-        width: 200px;
+        width: 210px;
         padding-right: 20px;
         font-size: 1rem;
         font-weight: bold;

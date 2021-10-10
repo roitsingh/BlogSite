@@ -40,7 +40,7 @@ router.get('/comment/:id/edit',isLoggedIn,checkCommentOwnerShip,async(req,res) =
         const calledComment= await Comment.findById({_id:req.params.id});
         const comments=await Comment.find({postId:calledComment.postId});
         const post=await Post.findById({_id:calledComment.postId});
-        res.render('show',{id,post,comments});
+        res.render('show',{id,user:req.user,post,comments});
     } catch (error) {
         return res.status(400).send({error:error});
     }
@@ -57,7 +57,7 @@ router.post('/comment/:id/edit',isLoggedIn,checkCommentOwnerShip,async(req,res) 
         });
         const comments=await Comment.find({postId:calledComment.postId});
         const post=await Post.findById({_id:calledComment.postId});
-        res.render('show',{tid,post,comments});
+        res.render('show',{tid,user:req.user,post,comments});
     } catch (error) {
         return res.status(400).send({error:error});
     }
@@ -71,7 +71,8 @@ router.get('/comment/:id/delete',async(req,res) => {
         const calledComment= await Comment.findById({_id:req.params.id});
         const comments=await Comment.find({postId:calledComment.postId});
         const post=await Post.findById({_id:calledComment.postId});
-        res.render('show',{tid,post,comments});
+        console.log(req.user);
+        res.render('show',{tid,user:req.user,post,comments});
     } catch (error) {
         return res.status(400).send({error:error});
     }
@@ -86,7 +87,7 @@ router.post('/comment/:id/delete',isLoggedIn,checkCommentOwnerShip,async(req,res
         await Comment.findByIdAndDelete({_id:req.params.id});
         const comments=await Comment.find({postId:calledComment.postId});
         const post=await Post.findById({_id:calledComment.postId});
-        res.render('show',{tid,post,comments});
+        res.render('show',{tid,user:req.user,post,comments});
     } catch (error) {
         return res.status(400).send({error:error});
     }
